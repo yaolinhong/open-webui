@@ -1,5 +1,6 @@
 import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig } from 'vite';
+import legacy from "@vitejs/plugin-legacy";
 
 // /** @type {import('vite').Plugin} */
 // const viteServerConfig = {
@@ -16,7 +17,14 @@ import { defineConfig } from 'vite';
 // };
 
 export default defineConfig({
-	plugins: [sveltekit()],
+	plugins: [
+		sveltekit(),
+		legacy({
+			modernPolyfills: true,
+			renderLegacyChunks: false,
+			targets: ['chrome 86', 'safari 13', 'firefox 78', 'edge 86'],
+		})
+	],
 	define: {
 		APP_VERSION: JSON.stringify(process.env.npm_package_version)
 	},
